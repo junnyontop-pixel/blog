@@ -1,31 +1,149 @@
-.App {
-  text-align: center;
+/* 전반적인 레이아웃 초기화 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  background-color: #f5f5f7; /* 부드러운 배경색 */
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+  color: #1f1f1f;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* 헤더 스타일 */
+.header_container {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e5e5;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+#header {
+  max-width: 800px;
+  margin: 0 auto;
+  height: 60px;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  padding: 0 20px;
+}
+
+#bar_container {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+
+#title_container #title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+/* 콘텐츠 컨테이너 */
+#content_container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 0 20px;
+}
+
+/* 게시글 카드 스타일 */
+.contents {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* 은은한 그림자 */
+  transition: transform 0.2s ease;
+}
+
+.contents:hover {
+  transform: translateY(-2px); /* 마우스 올리면 살짝 들리는 효과 */
+}
+
+.contents .title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.contents .main_content {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #4b4b4b;
+  margin-bottom: 16px;
+}
+
+/* SVG 아이콘(좋아요/싫어요 버튼 느낌) 스타일 */
+.contents svg {
+  cursor: pointer;
+  margin-right: 12px;
+  transition: fill 0.2s ease;
+  fill: #8e8e93; /* 기본 색상을 약간 흐리게 */
+}
+
+.contents svg:hover {
+  fill: #007aff; /* 마우스 올리면 파란색으로 변경 */
+}
+
+/* ===== Login / Signup ===== */
+#login_container,
+#signup_container {
+  display: flex;
+  align-items: center;
+}
+
+#login_btn {
+  background-color: transparent;
+  border: 1px solid #d1d1d6;
+  border-radius: 8px;
+  padding: 9px 20px;
+
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #1f1f1f;
+
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+#signup_btn {
+  background-color: #007aff; /* 신뢰감을 주는 파란색 */
+  border: 1px solid #007aff;
   color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 122, 255, 0.2);
 }
 
-.App-link {
-  color: #61dafb;
+#signup_btn:hover {
+  background-color: #0063cc;
+  border-color: #0063cc;
+  transform: translateY(-1px); /* 살짝 떠오르는 효과 */
+  box-shadow: 0 4px 8px rgba(0, 122, 255, 0.3);
 }
 
-.heart {
-  color: #ff0000;
+#signup_btn:active {
+  transform: translateY(0); /* 클릭했을 때 다시 내려감 */
 }
 
-.small {
-  font-size: 0.75rem;
+/* 버튼 간격 */
+#login_container {
+  margin-left: auto; /* 오른쪽으로 밀기 */
+}
+
+#signup_container {
+  margin-left: 8px;
+}
+
+/* hover 효과 */
+#login_btn:hover {
+  background-color: #f2f2f7;
 }
