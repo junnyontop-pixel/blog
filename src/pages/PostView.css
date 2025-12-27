@@ -1,0 +1,39 @@
+/* ===== Post View ===== */
+.post_view_page {
+  min-height: 100vh;
+  background: #f5f5f7;
+  padding: 28px 16px;
+}
+
+.post_view_header {
+  max-width: 800px;
+  margin: 0 auto 16px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.post_view_card {
+  max-width: 800px;
+  margin: 0 auto;
+
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 28px;
+
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+
+.post_view_title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 18px;
+}
+
+.post_view_content {
+  font-size: 1rem;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  color: #333;
+}

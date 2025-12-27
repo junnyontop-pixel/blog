@@ -32,7 +32,7 @@ function Home() {
 
       <div id="content_container">
         {posts.map((post) => (
-          <div className="contents" key={post.id} onClick={() => navigate(`/edit/${post.id}`)}>
+          <div className="contents" key={post.id} onClick={() => navigate(`/post/${post.id}`)}>
             <h4 className="title">{post.title}</h4>
             <p className="main_content">{post.content}</p>
 
@@ -41,6 +41,9 @@ function Home() {
 
             {/* 최고에요 아이콘 */}
             <svg onClick={(e) => {e.stopPropagation();console.log("좋아요!");}} xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="m713-280 127-297v-23H588l19-134-55 55q-8-8-28-28.5T496-736l144-144 32 32q14 14 19.5 31.5T694-780l-14 100h160q33 0 56.5 23.5T920-600v23q0 8-1.5 16t-4.5 16l-93 216q-10 22-30 35.5T747-280h-34ZM240-120H40v-400h200v80H120v240h120v80Zm267 0H160v-360l240-240 32 32q14 14 19.5 31.5T454-620l-14 100h160q33 0 56.5 23.5T680-440v24q0 8-1.5 15.5T674-385l-93 217q-10 22-30 35t-44 13Zm0-80 93-216v-24H348l19-134-127 127v247h267Zm-267 0v-247 247Z"/></svg>
+
+            {/* edit 아이콘 */}
+            <svg onClick={(e) => {e.stopPropagation(); navigate(`/edit/${post.id}`);}} xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg>
           </div>
         ))}
       </div>

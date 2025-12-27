@@ -69,11 +69,28 @@ body {
   margin-bottom: 12px;
 }
 
-.contents .main_content {
+.contents {
   font-size: 0.95rem;
   line-height: 1.6;
   color: #4b4b4b;
   margin-bottom: 16px;
+}
+
+.main_content {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #4b4b4b;
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+
+  /* 표준(미래 대비) */
+  line-clamp: 3;
+
+  /* 현재 실사용(핵심) */
+  -webkit-line-clamp: 3;
+
+  overflow: hidden;
 }
 
 /* SVG 아이콘(좋아요/싫어요 버튼 느낌) 스타일 */
