@@ -2,6 +2,7 @@ import "./EditPost.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { usePosts } from "../context/PostsContext";
 import { useEffect, useMemo, useState } from "react";
+import ReactMarkdown from "react-markdown";
 
 function EditPost() {
   const navigate = useNavigate();
@@ -94,9 +95,14 @@ function EditPost() {
                 <span className="panel_title">Preview</span>
                 <span className="panel_hint">지금은 기본 텍스트 미리보기</span>
               </div>
-              <div className="editor_preview">
-                <h3 className="preview_title">{title || "제목 미리보기"}</h3>
-                <p className="preview_body">{content || "내용 미리보기..."}</p>
+              <div className="editor_preview markdown">
+                <h3 className="preview_title">
+                  {title || "제목 미리보기"}
+                </h3>
+
+                <ReactMarkdown>
+                  {content || "내용 미리보기..."}
+                </ReactMarkdown>
               </div>
             </div>
           </div>

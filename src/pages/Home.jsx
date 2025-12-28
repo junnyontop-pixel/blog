@@ -1,7 +1,7 @@
 import '../App.css';
-import { useState } from "react";
 import { usePosts } from "../context/PostsContext";
 import { useNavigate } from "react-router-dom";
+import { stripMarkdown } from "../utils/stripMarkdown";
 
 function Home() {
   const { posts } = usePosts();
@@ -41,7 +41,7 @@ function Home() {
         {posts.map((post) => (
           <div className="contents" key={post.id} onClick={() => navigate(`/post/${post.id}`)}>
             <h4 className="title">{post.title}</h4>
-            <p className="main_content">{getExcerpt(post.content, 80)}</p>
+            <p className="main_content">{stripMarkdown(post.content).slice(0, 80)}…</p>
 
             {/* 좋아요 아이콘 */}
             <svg onClick={(e) => {e.stopPropagation(); console.log("좋아요!");}} xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M720-120H280v-520l280-280 50 50q7 7 11.5 19t4.5 23v14l-44 174h258q32 0 56 24t24 56v80q0 7-2 15t-4 15L794-168q-9 20-30 34t-44 14Zm-360-80h360l120-280v-80H480l54-220-174 174v406Zm0-406v406-406Zm-80-34v80H160v360h120v80H80v-520h200Z"/></svg>

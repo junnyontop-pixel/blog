@@ -1,6 +1,7 @@
 import "./PostView.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { usePosts } from "../context/PostsContext";
+import ReactMarkdown from "react-markdown";
 
 function PostView() {
   const { id } = useParams();
@@ -39,7 +40,11 @@ function PostView() {
 
       <div className="post_view_card">
         <h1 className="post_view_title">{post.title}</h1>
-        <p className="post_view_content">{post.content}</p>
+        <div className="post_view_content markdown">
+          <ReactMarkdown>
+            {post.content}
+          </ReactMarkdown>
+        </div>
       </div>
     </div>
   );

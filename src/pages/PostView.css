@@ -24,7 +24,7 @@
 
   box-shadow: 0 2px 10px rgba(0,0,0,0.06);
 
-  /* 🔥 핵심 */
+  /* 🔥 절대 튀어나가지 않게 */
   word-break: break-word;
   overflow-wrap: break-word;
 }
@@ -35,9 +35,69 @@
   margin-bottom: 18px;
 }
 
-.post_view_content {
+/* ===== Markdown Content ===== */
+.post_view_content.markdown {
   font-size: 1rem;
   line-height: 1.8;
-  white-space: pre-wrap;
   color: #333;
+
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+/* 문단 */
+.markdown p {
+  margin-bottom: 14px;
+}
+
+/* 제목 */
+.markdown h1 {
+  font-size: 1.4rem;
+  margin: 28px 0 16px;
+}
+
+.markdown h2 {
+  font-size: 1.25rem;
+  margin: 24px 0 14px;
+}
+
+.markdown h3 {
+  font-size: 1.1rem;
+  margin: 20px 0 12px;
+}
+
+/* 리스트 */
+.markdown ul,
+.markdown ol {
+  padding-left: 20px;
+  margin-bottom: 14px;
+}
+
+.markdown li {
+  margin-bottom: 6px;
+}
+
+/* 인라인 코드 */
+.markdown code {
+  background: #f2f2f7;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* 코드 블록 */
+.markdown pre {
+  background: #1e1e1e;
+  color: #f5f5f7;
+  padding: 16px;
+  border-radius: 10px;
+  overflow-x: auto;
+  margin-bottom: 16px;
+}
+
+.markdown pre code {
+  background: none;
+  padding: 0;
+  font-size: 0.9rem;
 }
