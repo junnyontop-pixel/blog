@@ -3,6 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { usePosts } from "../context/PostsContext";
 import { useEffect, useMemo, useState } from "react";
 import ReactMarkdown from "react-markdown";
+import rehypeHighlight from "rehype-highlight";
+import "highlight.js/styles/github.css"; // 스타일
 
 function EditPost() {
   const navigate = useNavigate();
@@ -100,7 +102,7 @@ function EditPost() {
                   {title || "제목 미리보기"}
                 </h3>
 
-                <ReactMarkdown>
+                <ReactMarkdown rehypePlugins={[rehypeHighlight]}>
                   {content || "내용 미리보기..."}
                 </ReactMarkdown>
               </div>

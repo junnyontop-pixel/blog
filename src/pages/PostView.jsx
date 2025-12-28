@@ -2,6 +2,8 @@ import "./PostView.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { usePosts } from "../context/PostsContext";
 import ReactMarkdown from "react-markdown";
+import rehypeHighlight from "rehype-highlight";
+import "highlight.js/styles/github.css"; // 스타일
 
 function PostView() {
   const { id } = useParams();
@@ -41,7 +43,7 @@ function PostView() {
       <div className="post_view_card">
         <h1 className="post_view_title">{post.title}</h1>
         <div className="post_view_content markdown">
-          <ReactMarkdown>
+          <ReactMarkdown rehypePlugins={[rehypeHighlight]}>
             {post.content}
           </ReactMarkdown>
         </div>
