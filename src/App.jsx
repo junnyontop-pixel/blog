@@ -3,8 +3,13 @@ import Home from "./pages/Home";
 import EditPost from "./pages/EditPost";
 import PostView from "./pages/PostView"; // ✅ 추가
 import { PostsProvider } from "./context/PostsContext";
+import { supabase } from "./lib/supabase";
 
 function App() {
+  supabase.from("posts").select("*").then(({ data, error }) => {
+    console.log("supabase test:", { data, error });
+  });
+
   return (
     <PostsProvider>
       <Routes>

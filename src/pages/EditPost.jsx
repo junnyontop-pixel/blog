@@ -4,30 +4,38 @@ import { usePosts } from "../context/PostsContext";
 import { useEffect, useMemo, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
-import "highlight.js/styles/github.css"; // 스타일
+import "highlight.js/styles/github.css";
 
 function EditPost() {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { posts, setPosts } = usePosts();
 
-  const post = useMemo(() => posts.find((p) => String(p.id) === String(id)), [posts, id]);
+  // ✅ setPosts 제거, updatePost 사용
+  const { posts, updatePost } = usePosts();
+
+  const post = useMemo(
+    () => posts.find((p) => String(p.id) === String(id)),
+    [posts, id]
+  );
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
   useEffect(() => {
     if (!post) return;
-    setTitle(post.title);
-    setContent(post.content);
+    setTitle(post.title ?? "");
+    setContent(post.content ?? "");
   }, [post]);
 
-  const handleSave = () => {
-    setPosts((prev) =>
-      prev.map((p) =>
-        String(p.id) === String(id) ? { ...p, title: title.trim(), content } : p
-      )
-    );
+  /* =========================
+     ✅ 저장 (Supabase update)
+  ========================= */
+  const handleSave = async () => {
+    await updatePost(post.id, {
+      title: title.trim(),
+      content,
+    });
+
     navigate("/");
   };
 
@@ -36,12 +44,19 @@ function EditPost() {
       <div className="editor_page">
         <div className="editor_shell">
           <div className="editor_header">
-            <button className="btn_ghost" onClick={() => navigate("/")}>← Back</button>
+            <button className="btn_ghost" onClick={() => navigate("/")}>
+              ← Back
+            </button>
           </div>
+
           <div className="editor_card">
             <h2 className="editor_title">Post not found</h2>
-            <p className="editor_desc">해당 글이 없어요. 홈으로 돌아가서 다시 선택해줘.</p>
-            <button className="btn_primary" onClick={() => navigate("/")}>Go Home</button>
+            <p className="editor_desc">
+              해당 글이 없어요. 홈으로 돌아가서 다시 선택해줘.
+            </p>
+            <button className="btn_primary" onClick={() => navigate("/")}>
+              Go Home
+            </button>
           </div>
         </div>
       </div>
@@ -53,11 +68,15 @@ function EditPost() {
       <div className="editor_shell">
         {/* 상단 바 */}
         <div className="editor_header">
-          <button className="btn_ghost" onClick={() => navigate("/")}>← Home</button>
+          <button className="btn_ghost" onClick={() => navigate("/")}>
+            ← Home
+          </button>
 
           <div className="editor_header_right">
             <span className="editor_badge">Editing #{post.id}</span>
-            <button className="btn_primary" onClick={handleSave}>Save</button>
+            <button className="btn_primary" onClick={handleSave}>
+              Save
+            </button>
           </div>
         </div>
 
@@ -77,12 +96,12 @@ function EditPost() {
           </div>
 
           <div className="editor_grid">
-            {/* 왼쪽: 작성 */}
+            {/* 작성 */}
             <div className="editor_panel">
               <div className="panel_head">
                 <span className="panel_title">Write</span>
-                <span className="panel_hint">Markdown은 다음 단계에서 붙이자</span>
               </div>
+
               <textarea
                 className="editor_textarea"
                 value={content}
@@ -91,12 +110,12 @@ function EditPost() {
               />
             </div>
 
-            {/* 오른쪽: 미리보기(일단 텍스트 프리뷰) */}
+            {/* 미리보기 */}
             <div className="editor_panel">
               <div className="panel_head">
                 <span className="panel_title">Preview</span>
-                <span className="panel_hint">지금은 기본 텍스트 미리보기</span>
               </div>
+
               <div className="editor_preview markdown">
                 <h3 className="preview_title">
                   {title || "제목 미리보기"}
@@ -109,11 +128,15 @@ function EditPost() {
             </div>
           </div>
 
-          {/* 하단 액션 */}
+          {/* 하단 */}
           <div className="editor_footer">
-            <button className="btn_danger_outline" onClick={() => navigate("/")}>
+            <button
+              className="btn_danger_outline"
+              onClick={() => navigate("/")}
+            >
               Cancel
             </button>
+
             <button className="btn_primary" onClick={handleSave}>
               Save & Exit
             </button>

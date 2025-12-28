@@ -1,32 +1,88 @@
-import { createContext, useContext, useState } from "react";
+// context/PostsContext.jsx
+import { createContext, useContext, useEffect, useState } from "react";
+import { supabase } from "../lib/supabase";
 
 const PostsContext = createContext();
 
 export function PostsProvider({ children }) {
-  const [posts, setPosts] = useState([
-    { id: 1, title: "파이썬 독학", content: "파이썬 어쩌구저쩌구...." },
-    { id: 2, title: "js 독학", content: "js 어쩌구저쩌구...." },
-    { id: 3, title: "자바 독학", content: "자바 어쩌구저쩌구...." },
-  ]);
+  const [posts, setPosts] = useState([]);
 
-  const addPost = () => {
-    const newPost = {
-      id: Date.now(),
-      title: "",
-      content: "",
-      authorId: null, // 로그인 붙일 때 사용
-    };
+  /* 🔹 초기 로딩 */
+  useEffect(() => {
+    fetchPosts();
+  }, []);
 
-    setPosts((prev) => [newPost, ...prev]);
-    return newPost.id;
+  const fetchPosts = async () => {
+    const { data, error } = await supabase
+      .from("posts")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    setPosts(data || []);
   };
 
-  const deletePost = (id) => {
+  /* ✅ 글 추가 */
+  const addPost = async () => {
+    const { data, error } = await supabase
+      .from("posts")
+      .insert({
+        title: "",
+        content: "",
+      })
+      .select()
+      .single();
+
+    if (error) {
+      console.error(error);
+      return null;
+    }
+
+    // ✅ prepend
+    setPosts((prev) => [data, ...prev]);
+    return data.id;
+  };
+
+  /* ✅ 글 수정 (🔥 fetchPosts 절대 X) */
+  const updatePost = async (id, updates) => {
+    const { data, error } = await supabase
+      .from("posts")
+      .update(updates)
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    // ✅ 핵심 코드
+    setPosts((prev) =>
+      prev.map((p) => (p.id === data.id ? data : p))
+    );
+  };
+
+  /* ✅ 글 삭제 */
+  const deletePost = async (id) => {
+    const { error } = await supabase.from("posts").delete().eq("id", id);
+
+    if (error) {
+      console.error(error);
+      return;
+    }
+
     setPosts((prev) => prev.filter((p) => p.id !== id));
   };
 
   return (
-    <PostsContext.Provider value={{ posts, setPosts, addPost, deletePost }}>
+    <PostsContext.Provider
+      value={{ posts, addPost, updatePost, deletePost }}
+    >
       {children}
     </PostsContext.Provider>
   );
