@@ -1,0 +1,45 @@
+/* ===== Home Toolbar ===== */
+.home_toolbar {
+  max-width: 800px;
+  margin: 12px auto 16px;
+  padding: 10px 14px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.toolbar_title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1f1f1f;
+}
+
+/* 오른쪽 액션 영역 */
+.toolbar_right {
+  display: flex;
+  align-items: center;
+}
+
+/* + 아이콘 버튼처럼 */
+.toolbar_right svg {
+  cursor: pointer;
+  padding: 1px;
+  border-radius: 8px;
+  fill: #8e8e93;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.toolbar_right svg:hover {
+  background-color: #f2f2f7;
+  transform: translateY(-1px);
+}
+
+.toolbar_right svg:active {
+  transform: translateY(0);
+}

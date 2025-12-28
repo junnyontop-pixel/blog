@@ -101,7 +101,7 @@ body {
   fill: #8e8e93; /* 기본 색상을 약간 흐리게 */
 }
 
-.contents svg:hover {
+svg:hover {
   fill: #007aff; /* 마우스 올리면 파란색으로 변경 */
 }
 

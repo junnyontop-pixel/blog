@@ -1,3 +1,4 @@
+import './Toolbar.css';
 import '../App.css';
 import { usePosts } from "../context/PostsContext";
 import { useNavigate } from "react-router-dom";
@@ -6,13 +7,6 @@ import { stripMarkdown } from "../utils/stripMarkdown";
 function Home() {
   const { posts } = usePosts();
   const navigate = useNavigate();
-
-  const getExcerpt = (text, limit = 80) => {
-    const singleLine = text.replace(/\n/g, " ");
-    return singleLine.length > limit
-      ? singleLine.slice(0, limit) + "…"
-      : singleLine;
-  };
 
   return (
     <>
@@ -35,6 +29,16 @@ function Home() {
           {/* 여기에 */}
 
         </header>
+      </div>
+
+      <div className="home_toolbar">
+        <div className="toolbar_left">
+          <span className="toolbar_title">Posts</span>
+        </div>
+
+        <div className="toolbar_right">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
+        </div>
       </div>
 
       <div id="content_container">
