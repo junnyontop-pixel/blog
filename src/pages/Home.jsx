@@ -26,10 +26,10 @@ function Home() {
             <h2 id='title'>Blog</h2>
           </div>
           <div id="login_container">
-            <button id="login_btn">login</button>
+            <button id="login_btn" onClick={() => navigate("/login")}>login</button>
           </div>
           <div id="signup_container">
-            <button id="signup_btn">sign up</button>
+            <button id="signup_btn" onClick={() => navigate("/signup")}>sign up</button>
           </div>
           {/* 나중에 검색기능 추가 */}
 
