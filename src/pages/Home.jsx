@@ -3,6 +3,8 @@ import '../App.css';
 import { usePosts } from "../context/PostsContext";
 import { useNavigate } from "react-router-dom";
 import { stripMarkdown } from "../utils/stripMarkdown";
+import { useAuth } from "../context/AuthContext";
+import { supabase } from "../lib/supabase";
 
 function Home() {
   const { posts, deletePost, addPost } = usePosts();
@@ -15,6 +17,9 @@ function Home() {
     navigate(`/edit/${id}`);
   };
 
+  const { user, loading } = useAuth();
+
+  console.log("avatar:", user?.user_metadata?.avatar_url);
   return (
     <>
       <div className="header_container">
@@ -26,11 +31,30 @@ function Home() {
             <h2 id='title'>Blog</h2>
           </div>
           <div id="login_container">
-            <button id="login_btn" onClick={() => navigate("/login")}>login</button>
+            {loading ? null : user ? (
+              <img
+                src={
+                  user.user_metadata?.avatar_url ||
+                  user.user_metadata?.picture
+                }
+                alt="profile"
+                className="avatar"
+                onClick={() => supabase.auth.signOut()}
+              />
+            ) : (
+              <button id="login_btn" onClick={() => navigate("/login")}>
+                Login
+              </button>
+            )}
           </div>
-          <div id="signup_container">
-            <button id="signup_btn" onClick={() => navigate("/signup")}>sign up</button>
-          </div>
+
+          {!user && (
+            <div id="signup_container">
+              <button id="signup_btn" onClick={() => navigate("/signup")}>
+                Get Started
+              </button>
+            </div>
+          )}
           {/* 나중에 검색기능 추가 */}
 
           {/* 여기에 */}

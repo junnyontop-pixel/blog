@@ -9,7 +9,7 @@ function Signup() {
       <div className="auth_card">
         <h1 className="auth_title">Sign up</h1>
 
-        <button className="auth_btn github">
+        <button className="auth_btn github" onClick={() => navigate("/login")}>
           Sign up with GitHub
         </button>
 

@@ -164,3 +164,11 @@ svg:hover {
 #login_btn:hover {
   background-color: #f2f2f7;
 }
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;   /* 🔥 이게 핵심 */
+  cursor: pointer;
+}
