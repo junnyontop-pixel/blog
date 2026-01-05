@@ -30,6 +30,7 @@ https://blog-eta-nine-33.vercel.app/
 ## 🛠️ 기술 스택
 
 ### Frontend
+- Codespaces
 - React
 - Vite
 - React Router
