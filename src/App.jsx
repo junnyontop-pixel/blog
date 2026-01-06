@@ -1,9 +1,9 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import EditPost from "./pages/EditPost";
-import PostView from "./pages/PostView"; // ✅ 추가
+import EditPost from "./pages/EditPost"; //✅ 추가
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import PostView from "./pages/PostView";
 
 function App() {
   // useEffect(() => {

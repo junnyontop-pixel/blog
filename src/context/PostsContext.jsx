@@ -1,11 +1,13 @@
 // context/PostsContext.jsx
 import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
+import { useAuth } from "./AuthContext";
 
 const PostsContext = createContext();
 
 export function PostsProvider({ children }) {
   const [posts, setPosts] = useState([]);
+  const { user } = useAuth();
 
   /* 🔹 초기 로딩 */
   useEffect(() => {
@@ -15,7 +17,13 @@ export function PostsProvider({ children }) {
   const fetchPosts = async () => {
     const { data, error } = await supabase
       .from("posts")
-      .select("*")
+      .select(`
+        *,
+        profiles:profiles!posts_user_id_fkey (
+          username,
+          avatar_url
+        )
+      `)
       .order("created_at", { ascending: false });
 
     if (error) {
@@ -33,6 +41,7 @@ export function PostsProvider({ children }) {
       .insert({
         title: "",
         content: "",
+        user_id: user.id,
       })
       .select()
       .single();
@@ -42,8 +51,7 @@ export function PostsProvider({ children }) {
       return null;
     }
 
-    // ✅ prepend
-    setPosts((prev) => [data, ...prev]);
+    await fetchPosts();   // ✅ 여기서 끝
     return data.id;
   };
 
@@ -81,7 +89,7 @@ export function PostsProvider({ children }) {
 
   return (
     <PostsContext.Provider
-      value={{ posts, addPost, updatePost, deletePost }}
+      value={{ posts, addPost, updatePost, deletePost, fetchPosts }}
     >
       {children}
     </PostsContext.Provider>

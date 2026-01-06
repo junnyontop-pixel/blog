@@ -9,17 +9,28 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // 1️⃣ 최초 세션 가져오기 (이게 지금 빠져 있었음)
+    // 🔹 최초 세션 가져오기
     supabase.auth.getSession().then(({ data }) => {
-      setUser(data.session?.user ?? null);
+      const sessionUser = data.session?.user ?? null;
+      setUser(sessionUser);
+
+      if (sessionUser) {
+        ensureProfile(sessionUser);
+      }
+
       setLoading(false);
     });
 
-    // 2️⃣ 로그인 / 로그아웃 변화 감지
+    // 🔹 로그인 / 로그아웃 감지
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
+      const sessionUser = session?.user ?? null;
+      setUser(sessionUser);
+
+      if (sessionUser) {
+        ensureProfile(sessionUser);
+      }
     });
 
     return () => subscription.unsubscribe();
@@ -34,4 +45,25 @@ export function AuthProvider({ children }) {
 
 export function useAuth() {
   return useContext(AuthContext);
+}
+
+/* =========================
+   🔑 핵심 함수
+========================= */
+async function ensureProfile(user) {
+  const { error } = await supabase.from("profiles").upsert({
+    id: user.id,
+    username:
+      user.user_metadata?.user_name ||
+      user.user_metadata?.name ||
+      "익명",
+    avatar_url:
+      user.user_metadata?.avatar_url ||
+      user.user_metadata?.picture ||
+      null,
+  });
+
+  if (error) {
+    console.error("profiles upsert error:", error);
+  }
 }
