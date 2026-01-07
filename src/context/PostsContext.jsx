@@ -41,7 +41,9 @@ export function PostsProvider({ children }) {
       .insert({
         title: "",
         content: "",
-        user_id: user.id,
+        user_id: user?.id ?? null,
+        author_name: user?.user_metadata?.user_name ?? "익명",
+        author_avatar: user?.user_metadata?.avatar_url ?? null,
       })
       .select()
       .single();

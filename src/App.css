@@ -172,3 +172,36 @@ svg:hover {
   object-fit: cover;   /* 🔥 이게 핵심 */
   cursor: pointer;
 }
+
+.post_author_name {
+  line-height: 1;
+  font-weight: 700;
+}
+
+.post_footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+
+.post_actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.post_author_row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  color: #666;
+}
+
+.post_author_avatar {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  object-fit: cover;
+}
