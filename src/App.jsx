@@ -4,6 +4,7 @@ import EditPost from "./pages/EditPost"; //✅ 추가
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import PostView from "./pages/PostView";
+import MyPage from "./pages/Mypage";
 
 function App() {
   // useEffect(() => {
@@ -25,6 +26,7 @@ function App() {
       <Route path="/signup" element={<Signup />} />
       <Route path="/post/:id" element={<PostView />} />
       <Route path="/edit/:id" element={<EditPost />} />
+      <Route path="/mypage" element={<MyPage />} />
     </Routes>
   );
 }
