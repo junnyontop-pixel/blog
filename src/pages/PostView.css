@@ -101,3 +101,36 @@
   padding: 0;
   font-size: 0.9rem;
 }
+
+/* 공통 (카드 목록 등 기본 아바타) */
+
+.author_display {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  max-width: 720px;
+  margin: 32px auto 0;
+  padding-top: 20px;
+
+  border-top: 1px solid #eaeaea;
+}
+
+.post_author_avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* ✅ PostView에서만 크게 */
+.author_display .post_author_avatar.large {
+  width: 48px;
+  height: 48px;
+}
+
+#author_name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #222;
+}

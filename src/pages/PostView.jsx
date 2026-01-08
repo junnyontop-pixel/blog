@@ -48,6 +48,16 @@ function PostView() {
           </ReactMarkdown>
         </div>
       </div>
+      <div className="author_display">
+        {post.author_avatar && (
+          <img
+            src={post.author_avatar}
+            alt="author avatar"
+            className="post_author_avatar large"
+          />
+        )}
+        <span id="author_name">{post.author_name ?? "익명"}</span>
+      </div>
     </div>
   );
 }
