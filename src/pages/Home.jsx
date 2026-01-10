@@ -13,10 +13,14 @@ function Home() {
   const navigate = useNavigate();
 
   const handleAddPost = async () => {
-    const id = await addPost();
-    if (!id) return;
+    if (!user) {
+      alert("로그인이 필요합니다");
+      navigate("/login");
+      return;
+    }
 
-    navigate(`/edit/${id}`);
+    const id = await addPost();
+    if (id) navigate(`/edit/${id}`);
   };
 
   const { user, loading } = useAuth();
@@ -26,6 +30,42 @@ function Home() {
   useEffect(() => {
     fetchPosts();
   }, [location.key]);
+
+  const handleEdit = (e, post) => {
+    e.stopPropagation();
+
+    if (!user) {
+      alert("로그인이 필요합니다");
+      navigate("/login");
+      return;
+    }
+
+    if (post.user_id !== user.id) {
+      alert("본인이 작성한 글만 수정할 수 있습니다");
+      return;
+    }
+
+    navigate(`/edit/${post.id}`);
+  };
+
+  const handleDelete = (e, post) => {
+    e.stopPropagation();
+
+    if (!user) {
+      alert("로그인이 필요합니다");
+      navigate("/login");
+      return;
+    }
+
+    if (post.user_id !== user.id) {
+      alert("본인이 작성한 글만 삭제할 수 있습니다");
+      return;
+    }
+
+    if (!window.confirm("정말 삭제하시겠습니까?")) return;
+
+    deletePost(post.id);
+  };
 
   console.log("avatar:", user?.user_metadata?.avatar_url);
   return (
@@ -133,10 +173,7 @@ function Home() {
 
                   {/* edit */}
                   <svg
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      navigate(`/edit/${post.id}`);
-                    }}
+                    onClick={(e) => handleEdit(e, post)}
                     xmlns="http://www.w3.org/2000/svg"
                     height="24px"
                     viewBox="0 -960 960 960"
@@ -149,10 +186,7 @@ function Home() {
                   {/* delete */}
                   <svg
                     onClick={(e) => {
-                      e.stopPropagation();
-                      const ok = window.confirm("정말로 삭제하시겠습니까?");
-                      if (!ok) return;
-                      deletePost(post.id);
+                      handleDelete(e, post);
                     }}
                     xmlns="http://www.w3.org/2000/svg"
                     height="24px"
