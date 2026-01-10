@@ -1,0 +1,61 @@
+/* ===== 전체 컨테이너 ===== */
+.mypage_container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+/* ===== 프로필 영역 ===== */
+.mypage_profile {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  margin-bottom: 32px;
+  border-radius: 14px;
+  background: #fafafa;
+}
+
+.mypage_avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.mypage_profile h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111;
+  margin: 0;
+}
+
+/* ===== 섹션 타이틀 ===== */
+.mypage_container h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #222;
+}
+
+/* ===== 글 목록 ===== */
+.mypage_post {
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  border: 1px solid #eee;
+  background: #fff;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.mypage_post:hover {
+  background: #f9f9f9;
+}
+
+/* 제목 */
+.mypage_post {
+  font-size: 15px;
+  font-weight: 500;
+  color: #111;
+}

@@ -2,6 +2,7 @@ import { useAuth } from "../context/AuthContext";
 import { usePosts } from "../context/PostsContext";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import "./Mypage.css";
 
 function MyPage() {
   const { user, loading } = useAuth();
