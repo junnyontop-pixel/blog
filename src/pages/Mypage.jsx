@@ -3,6 +3,7 @@ import { usePosts } from "../context/PostsContext";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import "./Mypage.css";
+import { stripMarkdown } from "../utils/stripMarkdown";
 
 function MyPage() {
   const { user, loading } = useAuth();
@@ -37,11 +38,83 @@ function MyPage() {
 
       {myPosts.map((post) => (
         <div
+          className="contents"
           key={post.id}
-          className="mypage_post"
           onClick={() => navigate(`/post/${post.id}`)}
         >
-          {post.title || "(제목 없음)"}
+          {/* 제목 */}
+          <h4 className="title">
+            {post.title || "(제목 없음)"}
+          </h4>
+
+          {/* 본문 미리보기 */}
+          <p className="main_content">
+            {stripMarkdown(post.content).slice(0, 80)}…
+          </p>
+
+          {/* footer */}
+          <div className="post_footer">
+            {/* 왼쪽: 액션 아이콘 */}
+            <div className="post_actions">
+              {/* 좋아요 */}
+              <svg
+                onClick={(e) => {
+                  e.stopPropagation();
+                  console.log("좋아요");
+                }}
+                xmlns="http://www.w3.org/2000/svg"
+                height="22"
+                viewBox="0 -960 960 960"
+                width="22"
+              >
+                <path d="M720-120H280v-520l280-280 50 50..." />
+              </svg>
+
+              {/* 수정 */}
+              <svg
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate(`/edit/${post.id}`);
+                }}
+                xmlns="http://www.w3.org/2000/svg"
+                height="22"
+                viewBox="0 -960 960 960"
+                width="22"
+              >
+                <path d="M200-200h57l391-391..." />
+              </svg>
+
+              {/* 삭제 */}
+              <svg
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (window.confirm("정말 삭제할까요?")) {
+                    deletePost(post.id);
+                  }
+                }}
+                xmlns="http://www.w3.org/2000/svg"
+                height="22"
+                viewBox="0 -960 960 960"
+                width="22"
+              >
+                <path d="M280-120q-33 0-56.5..." />
+              </svg>
+            </div>
+
+            {/* 오른쪽: 작성자 (내 마이페이지니까 나) */}
+            <div className="post_author_row">
+              {user.user_metadata?.avatar_url && (
+                <img
+                  src={user.user_metadata.avatar_url}
+                  alt="avatar"
+                  className="post_author_avatar"
+                />
+              )}
+              <span className="post_author_name">
+                {user.user_metadata?.user_name}
+              </span>
+            </div>
+          </div>
         </div>
       ))}
     </div>
