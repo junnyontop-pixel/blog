@@ -71,3 +71,9 @@ https://blog-eta-nine-33.vercel.app/
 
 - 개인 프로젝트
 - 풀스택 학습 및 실서비스 운영을 목표로 개발 중
+
+---
+
+## Feel free to ask any questions in the Discussions tab!
+
+## Suggestions and technical discussions are always welcome!
