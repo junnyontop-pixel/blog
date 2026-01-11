@@ -4,6 +4,7 @@ import { usePosts } from "../context/PostsContext";
 import ReactMarkdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
 import "highlight.js/styles/github.css"; // 스타일
+import { useAuth } from "../context/AuthContext";
 
 function PostView() {
   const { id } = useParams();
@@ -11,6 +12,25 @@ function PostView() {
   const { posts } = usePosts();
 
   const post = posts.find((p) => String(p.id) === String(id));
+
+  const { user } = useAuth();
+
+  const handleEdit = (e, post) => {
+    e.stopPropagation();
+
+    if (!user) {
+      alert("로그인이 필요합니다");
+      navigate("/login");
+      return;
+    }
+
+    if (post.user_id !== user.id) {
+      alert("본인이 작성한 글만 수정할 수 있습니다");
+      return;
+    }
+
+    navigate(`/edit/${post.id}`);
+  };
 
   if (!post) {
     return (
@@ -34,8 +54,9 @@ function PostView() {
 
         <button
           className="btn_primary"
-          onClick={() => navigate(`/edit/${post.id}`)}
-        >
+          onClick={(e) => {
+            handleEdit(e, post);}
+          }>
           Edit
         </button>
       </div>
