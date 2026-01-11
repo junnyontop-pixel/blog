@@ -1,42 +1,105 @@
 import { useAuth } from "../context/AuthContext";
 import { usePosts } from "../context/PostsContext";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import "./Mypage.css";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useMemo } from "react";
 import { stripMarkdown } from "../utils/stripMarkdown";
+import "./Mypage.css";
 
 function MyPage() {
   const { user, loading } = useAuth();
-  const { posts } = usePosts();
+  const { posts, deletePost } = usePosts();
   const navigate = useNavigate();
+  const { userId } = useParams(); // 있으면 다른 사람, 없으면 내 페이지
 
+  const handleEdit = (e, post) => {
+    e.stopPropagation();
+
+    if (!user) {
+      alert("로그인이 필요합니다");
+      navigate("/login");
+      return;
+    }
+
+    if (post.user_id !== user.id) {
+      alert("본인이 작성한 글만 수정할 수 있습니다");
+      return;
+    }
+
+    navigate(`/edit/${post.id}`);
+  };
+
+  const handleDelete = (e, post) => {
+    e.stopPropagation();
+
+    if (!user) {
+      alert("로그인이 필요합니다");
+      navigate("/login");
+      return;
+    }
+
+    if (post.user_id !== user.id) {
+      alert("본인이 작성한 글만 삭제할 수 있습니다");
+      return;
+    }
+
+    if (!window.confirm("정말 삭제하시겠습니까?")) return;
+
+    deletePost(post.id);
+  };
+
+  // ✅ 내가 보고 있는 페이지의 주인
+  const pageUserId = userId ?? user?.id;
+
+  // ✅ 이 페이지가 "내 페이지"인지
+  const isMyPage = user && pageUserId === user.id;
+
+  // 🔒 로그인 가드 (내 마이페이지 접근 시)
   useEffect(() => {
-    if (!loading && !user) {
+    if (!loading && !user && !userId) {
       alert("로그인이 필요합니다");
       navigate("/login");
     }
-  }, [user, loading]);
+  }, [user, loading, userId]);
 
-  if (!user) return null;
+  // ✅ 해당 유저의 글만 필터링
+  const pagePosts = useMemo(() => {
+    return posts.filter((post) => post.user_id === pageUserId);
+  }, [posts, pageUserId]);
 
-  const myPosts = posts.filter(
-    (post) => post.user_id === user.id
-  );
+  // ✅ 프로필 정보 (posts 기준 → DB 확장 대비)
+  const profile = pagePosts[0];
+
+  if (!pageUserId) return null;
 
   return (
     <div className="mypage_container">
+      {/* ===== 프로필 영역 ===== */}
       <div className="mypage_profile">
         <img
-          src={user.user_metadata?.avatar_url}
+          src={profile?.author_avatar ?? "/default-avatar.png"}
           alt="avatar"
           className="mypage_avatar"
         />
-        <h2>{user.user_metadata?.user_name}</h2>
+        <h2>{profile?.author_name ?? "User"}</h2>
+
+        {/* 👉 나중에 팔로우 버튼 여기 */}
+        {!isMyPage && (
+          <button className="btn_follow">
+            Follow
+          </button>
+        )}
       </div>
 
-      <h3>내가 쓴 글</h3>
+      <h3>
+        {isMyPage ? "내가 쓴 글" : "작성한 글"}
+      </h3>
 
-      {myPosts.map((post) => (
+      {/* ===== 글 목록 ===== */}
+      {pagePosts.length === 0 && (
+        <p className="empty_text">아직 작성한 글이 없습니다.</p>
+      )}
+
+      {pagePosts.map((post) => (
         <div
           className="contents"
           key={post.id}
@@ -54,7 +117,7 @@ function MyPage() {
 
           {/* footer */}
           <div className="post_footer">
-            {/* 왼쪽: 액션 아이콘 */}
+            {/* 왼쪽: 액션 */}
             <div className="post_actions">
               {/* 좋아요 */}
               <svg
@@ -113,17 +176,15 @@ function MyPage() {
               </svg>
             </div>
 
-            {/* 오른쪽: 작성자 (내 마이페이지니까 나) */}
+            {/* 오른쪽: 작성자 */}
             <div className="post_author_row">
-              {user.user_metadata?.avatar_url && (
-                <img
-                  src={user.user_metadata.avatar_url}
-                  alt="avatar"
-                  className="post_author_avatar"
-                />
-              )}
+              <img
+                src={post.author_avatar}
+                alt="author"
+                className="post_author_avatar"
+              />
               <span className="post_author_name">
-                {user.user_metadata?.user_name}
+                {post.author_name}
               </span>
             </div>
           </div>
