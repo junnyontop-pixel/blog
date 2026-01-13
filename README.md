@@ -30,6 +30,8 @@ https://blog-eta-nine-33.vercel.app/
 - 💡 코드 블록 하이라이팅
 - 🔄 새로고침 시 데이터 유지 (Supabase 연동)
 - 🌐 Vercel 배포
+- 마이페이지
+- `/user/user_id`구조로 사용자 구분 마이페이지 구현
 
 ---
 
@@ -44,16 +46,7 @@ https://blog-eta-nine-33.vercel.app/
 
 ### Backend
 - Supabase (Database, API)
-- 예정: Supabase Auth (Google / GitHub / Kakao)
-
-### Deployment
-- Vercel
-
----
-
-## 🔐 예정 기능
-
-- 소셜 로그인 (Google / GitHub / Kakao)
+- 예정: 현
 - ~~작성자 정보 표시 (완성!!)~~
 - ~~본인 글만 수정/삭제 가능 (RLS 적용)~~
 - ~~프로필 이미지 및 사용자 페이지~~
