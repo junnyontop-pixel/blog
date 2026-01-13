@@ -72,7 +72,7 @@ function PostView() {
       <div className="author_display">
         {post.author_avatar && (
           <img
-            onClick={ () => navigate("/mypage")}
+            onClick={ () => navigate(`/user/${post.user_id}`)}
             src={post.author_avatar}
             alt="author avatar"
             className="post_author_avatar large"
