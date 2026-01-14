@@ -59,3 +59,18 @@
   font-weight: 500;
   color: #111;
 }
+
+.btn_follow {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn_follow:hover {
+  background-color: #0056b3;
+}
