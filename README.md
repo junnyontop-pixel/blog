@@ -46,7 +46,6 @@ https://blog-eta-nine-33.vercel.app/
 
 ### Backend
 - Supabase (Database, API)
-- 예정: 현
 - ~~작성자 정보 표시 (완성!!)~~
 - ~~본인 글만 수정/삭제 가능 (RLS 적용)~~
 - ~~프로필 이미지 및 사용자 페이지~~
